@@ -15,12 +15,16 @@ const Body = () => {
 
     const onClickCheck = async () => {
         try {
-            const payload = { password };
-            const res = await axios.post('http://localhost:8000/api/processPassword', payload);
-            if (res?.data?.status === "success") {
-                setErrorMessage("");
-                setPasswordResponse(res?.data?.data);
-                setShowOutput(true);
+            if (password.length > 0) {
+                const payload = { password };
+                const res = await axios.post('http://localhost:8000/api/processPassword', payload);
+                if (res?.data?.status === "success") {
+                    setErrorMessage("");
+                    setPasswordResponse(res?.data?.data);
+                    setShowOutput(true);
+                }
+            } else {
+                setErrorMessage("Password is empty")
             }
         } catch (error) {
             console.error(error?.message ? error?.message : error?.response?.data?.message);
